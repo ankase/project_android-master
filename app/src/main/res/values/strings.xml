@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">project</string>
+    <string name="text">Постеры предоставлены сайтом https://www.movieposters.com/</string>
+    <string name="bttn_menu1">Меню</string>
+    <string name="bttn_menu2">Закладки</string>
+    <string name="bttn_menu3">Настройки</string>
+    <string name="bttn_menu4">Друзья</string>
+    <string name="bttn_menu5">Уведомления</string>
+</resources>
