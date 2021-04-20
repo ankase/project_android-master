@@ -6,4 +6,9 @@
     <string name="bttn_menu3">Настройки</string>
     <string name="bttn_menu4">Друзья</string>
     <string name="bttn_menu5">Уведомления</string>
+    <string name="menu_settings_title">Настройки</string>
+    <string name="menu_favorite_title">Избранное</string>
+    <string name="menu_watch_later_title">Отложенный просмотр</string>
+    <string name="menu_selections_title">Подборки</string>
+    <string name="top_title">Movie search</string>
 </resources>
