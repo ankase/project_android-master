@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initButtons (){
-        topAppBar.setOnMenuItemClickListener {
+        top_App_Bar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.settings -> {
                     Toast.makeText(this, "Настройки", Toast.LENGTH_SHORT).show()

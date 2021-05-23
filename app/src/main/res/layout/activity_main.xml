@@ -9,9 +9,10 @@
 
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:autoLink="web"
         android:linksClickable="true"
         android:text="@string/text"
@@ -27,10 +28,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+            android:id="@+id/top_App_Bar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="46dp"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_baseline_view_headline_24"
             app:title="@string/top_title" />
@@ -54,7 +55,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/top_Menu"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_margin="15dp"
         android:elevation="10dp"
         app:cardCornerRadius="20dp"
@@ -64,7 +65,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
@@ -104,5 +105,79 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:useDefaultMargins="true"
+        android:layoutAnimation="@anim/layout_animation"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/poster_1"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            app:cardCornerRadius="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/anim_poster_1"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/poster_2"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            app:cardCornerRadius="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/anim_poster_2"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/poster_3"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            app:cardCornerRadius="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/anim_poster_3"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/poster_4"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            app:cardCornerRadius="15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/anim_poster_4"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
