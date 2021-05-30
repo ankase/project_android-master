@@ -9,7 +9,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val poster = itemView.poster
     private val description = itemView.description
 
-    fun bind(film:Film) {
+    fun bind(film: Film) {
         tittle.text = film.title
         poster.setImageResource(film.poster)
         description.text = film.description
