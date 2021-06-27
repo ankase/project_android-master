@@ -1,11 +1,10 @@
 package com.neverova.project
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -24,6 +23,11 @@ class HomeFragment : Fragment() {
         Film("The Hateful Eight", R.drawable.the_hateful_eight, "n the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.")
     )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,14 +38,26 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        AnimationHelper.performFragmentCircularRevealAnimation(home_fragment_root, requireActivity(), 1)
+
+        initSearchView()
+
+        initRecyckler()
+
+        filmsAdapter.addItems(filmsDataBase)
+    }
+
+    private fun initSearchView() {
         search_view.setOnClickListener {
             search_view.isIconified = false
         }
 
-        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
+        search_view.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
+
 
             override fun onQueryTextChange(newText: String): Boolean {
                 if (newText.isEmpty()) {
@@ -50,31 +66,27 @@ class HomeFragment : Fragment() {
                 }
 
                 val result = filmsDataBase.filter {
-                    it.title.toLowerCase(Locale.getDefault()).contains(newText.toLowerCase(Locale.getDefault()))
+                    it.title.toLowerCase(Locale.getDefault())
+                        .contains(newText.toLowerCase(Locale.getDefault()))
                 }
-
                 filmsAdapter.addItems(result)
                 return true
             }
         })
-
-        initRecycler()
-        filmsAdapter.addItems(filmsDataBase)
     }
 
-    private fun initRecycler() {
+    private fun initRecyckler() {
         recycler.apply {
-            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener{
-                override fun click(film: Film) {
-                    (requireActivity() as MainActivity).launchDetailsFragment(film)
-                }
-            })
+            filmsAdapter =
+                FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
+                    override fun click(film: Film) {
+                        (requireActivity() as MainActivity).launchDetailsFragment(film)
+                    }
+                })
             adapter = filmsAdapter
             layoutManager = LinearLayoutManager(requireContext())
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
         }
-        filmsAdapter.addItems(filmsDataBase)
     }
-
 }
