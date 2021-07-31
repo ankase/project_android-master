@@ -1,8 +1,11 @@
-package com.neverova.project
+package com.neverova.project.view.rv_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.neverova.project.view.rv_viewholders.FilmViewHolder
+import com.neverova.project.R
+import com.neverova.project.domain.Film
 import kotlinx.android.synthetic.main.film_item.view.*
 
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -32,6 +35,6 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
     }
 
     interface OnItemClickListener {
-        fun click(film:Film)
+        fun click(film: Film)
     }
 }

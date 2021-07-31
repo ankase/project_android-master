@@ -1,4 +1,4 @@
-package com.neverova.project
+package com.neverova.project.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neverova.project.view.rv_adapters.FilmListRecyclerAdapter
+import com.neverova.project.view.rv_adapters.TopSpacingItemDecoration
+import com.neverova.project.databinding.FragmentFavoritesBinding
+import com.neverova.project.domain.Film
+import com.neverova.project.utils.AnimationHelper
+import com.neverova.project.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : Fragment(){
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private lateinit var binding: FragmentFavoritesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_favorites,container, false )
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
@@ -26,8 +34,8 @@ class FavoritesFragment : Fragment(){
         AnimationHelper.performFragmentCircularRevealAnimation(favorites_fragment_root, requireActivity(),2)
 
 
-        favorites_recycler.apply {
-            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener{
+        binding.favoritesRecycler.apply {
+            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
                 override fun click(film: Film) {
                     (requireActivity() as MainActivity).launchDetailsFragment(film)
                 }

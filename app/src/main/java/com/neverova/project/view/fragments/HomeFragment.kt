@@ -1,27 +1,37 @@
-package com.neverova.project
+package com.neverova.project.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neverova.project.view.rv_adapters.FilmListRecyclerAdapter
+import com.neverova.project.R
+import com.neverova.project.view.rv_adapters.TopSpacingItemDecoration
+import com.neverova.project.databinding.FragmentHomeBinding
+import com.neverova.project.domain.Film
+import com.neverova.project.utils.AnimationHelper
+import com.neverova.project.view.MainActivity
+import com.neverova.project.viewmodel.HomeFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 
 class HomeFragment : Fragment() {
+    private val viewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(HomeFragmentViewModel::class.java)
+    }
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
-    val filmsDataBase = listOf(
-        Film("WALL·E", R.drawable.walle, "In the distant future, a small waste-collecting robot inadvertently embarks on a space journey that will ultimately decide the fate of mankind.", 8.3f),
-        Film("Django Unchained", R.drawable.django_unchained, "With the help of a German bounty-hunter, a freed slave sets out to rescue his wife from a brutal plantation-owner in Mississippi.", 6.5f),
-        Film("Inglourious Basterds", R.drawable.inglourios_basterds, "In Nazi-occupied France during World War II, a plan to assassinate Nazi leaders by a group of Jewish U.S. soldiers coincides with a theatre owner's vengeful plans for the same.", 7.6f),
-        Film("Pulp Fiction", R.drawable.pulp_fiction, "The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", 9.9f),
-        Film("The Boy in the Striped Pyjamas", R.drawable.the_boy_in_the_striped_pyjamas, "Through the innocent eyes of Bruno, the eight-year-old son of the commandant at a German concentration camp, a forbidden friendship with a Jewish boy on the other side of the camp fence has startling and unexpected consequences.", 5.5f),
-        Film("The Dark Knight Rises", R.drawable.the_dark_knight_rises, "Eight years after the Joker's reign of anarchy, Batman, with the help of the enigmatic Catwoman, is forced from his exile to save Gotham City from the brutal guerrilla terrorist Bane.", 2.0f),
-        Film("The Green Mile", R.drawable.the_green_mile, "The lives of guards on Death Row are affected by one of their charges: a black man accused of child murder and rape, yet who has a mysterious gift.", 4.8f),
-        Film("The Hateful Eight", R.drawable.the_hateful_eight, "n the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.",3.5f)
-    )
+    private lateinit var binding: FragmentHomeBinding
+    private var filmsDataBase = listOf<Film>()
+        set(value) {
+            if (field == value) return
+            field = value
+            filmsAdapter.addItems(field)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +42,8 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +55,9 @@ class HomeFragment : Fragment() {
 
         initRecyckler()
 
-        filmsAdapter.addItems(filmsDataBase)
+        viewModel.filmsListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
+            filmsDataBase = it
+        })
     }
 
     private fun initSearchView() {
