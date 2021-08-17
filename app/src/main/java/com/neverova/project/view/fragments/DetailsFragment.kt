@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.neverova.project.R
+import com.neverova.project.data.ApiConstants
 import com.neverova.project.databinding.FragmentDetailsBinding
 import com.neverova.project.domain.Film
 import kotlinx.android.synthetic.main.fragment_details.*
@@ -53,13 +55,18 @@ class DetailsFragment : Fragment() {
     private fun setFilmsDetails() {
         film = arguments?.get("film") as Film
 
-        details_toolbar.title = film.title
-        details_poster.setImageResource(film.poster)
-        details_description.text = film.description
+        binding.detailsToolbar.title = film.title
 
-        details_fab_favorites.setImageResource(
-                if (film.isInFavorites) R.drawable.ic_baseline_favorite_24
-                else R.drawable.ic_baseline_favorite_border_24
+        Glide.with(this)
+            .load(ApiConstants.IMAGES_URL + "w780" + film.poster)
+            .centerCrop()
+            .into(binding.detailsPoster)
+
+        binding.detailsDescription.text = film.description
+
+        binding.detailsFabFavorites.setImageResource(
+            if (film.isInFavorites) R.drawable.ic_baseline_favorite_24
+            else R.drawable.ic_baseline_favorite_border_24
         )
     }
 }
