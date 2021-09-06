@@ -5,12 +5,17 @@ import androidx.lifecycle.ViewModel
 import com.neverova.project.App
 import com.neverova.project.domain.Film
 import com.neverova.project.domain.Interactor
+import javax.inject.Inject
 
 class HomeFragmentViewModel : ViewModel() {
-    val filmsListLiveData:  MutableLiveData<List<Film>> = MutableLiveData()
-    private var interactor: Interactor = App.instance.interactor
+    val filmsListLiveData: MutableLiveData<List<Film>> = MutableLiveData()
+
+    //Инициализируем интерактор
+    @Inject
+    lateinit var interactor: Interactor
 
     init {
+        App.instance.dagger.inject(this)
         interactor.getFilmsFromApi(1, object : ApiCallback {
             override fun onSuccess(films: List<Film>) {
                 filmsListLiveData.postValue(films)
