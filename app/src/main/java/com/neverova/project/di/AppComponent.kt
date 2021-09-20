@@ -6,9 +6,11 @@ import com.neverova.project.di.modules.RemoteModule
 import com.neverova.project.viewmodel.HomeFragmentViewModel
 import dagger.Component
 import javax.inject.Singleton
+import com.neverova.project.viewmodel.SettingsFragmentViewModel
 
 @Singleton
 @Component(
+
     modules = [
         RemoteModule::class,
         DatabaseModule::class,
@@ -16,6 +18,6 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
-
     fun inject(homeFragmentViewModel: HomeFragmentViewModel)
+    fun inject(settingsFragmentViewModel: SettingsFragmentViewModel)
 }
