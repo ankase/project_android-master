@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.neverova.project.view.rv_adapters.FilmListRecyclerAdapter
 import com.neverova.project.view.rv_adapters.TopSpacingItemDecoration
 import com.neverova.project.databinding.FragmentFavoritesBinding
-import com.neverova.project.domain.Film
+import com.neverova.project.data.entity.Film
 import com.neverova.project.utils.AnimationHelper
 import com.neverova.project.view.MainActivity
 import kotlinx.android.synthetic.main.fragment_favorites.*

@@ -1,7 +1,7 @@
 package com.neverova.project.utils
 
-import com.neverova.project.data.Entity.TmdbFilm
-import com.neverova.project.domain.Film
+import com.neverova.project.data.entity.TmdbFilm
+import com.neverova.project.data.entity.Film
 
 object Converter {
     fun convertApiListToDTOList(list: List<TmdbFilm>?): List<Film> {

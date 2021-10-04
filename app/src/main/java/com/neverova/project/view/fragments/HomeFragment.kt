@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.neverova.project.view.rv_adapters.FilmListRecyclerAdapter
 import com.neverova.project.view.rv_adapters.TopSpacingItemDecoration
 import com.neverova.project.databinding.FragmentHomeBinding
-import com.neverova.project.domain.Film
+import com.neverova.project.data.entity.Film
 import com.neverova.project.utils.AnimationHelper
 import com.neverova.project.view.MainActivity
 import com.neverova.project.viewmodel.HomeFragmentViewModel
@@ -51,26 +53,22 @@ class HomeFragment : Fragment() {
         AnimationHelper.performFragmentCircularRevealAnimation(home_fragment_root, requireActivity(), 1)
 
         initSearchView()
-
         initPullToRefresh()
-
-
         initRecyckler()
 
         viewModel.filmsListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
             filmsDataBase = it
             filmsAdapter.addItems(it)
         })
+        viewModel.showProgressBar.observe(viewLifecycleOwner, Observer<Boolean> {
+            binding.progressBar.isVisible = it
+        })
     }
 
     private fun initPullToRefresh() {
-        //Вешаем слушатель, чтобы вызвался pull to refresh
         binding.pullToRefresh.setOnRefreshListener {
-            //Чистим адаптер(items нужно будет сделать паблик или создать для этого публичный метод)
             filmsAdapter.items.clear()
-            //Делаем новый запрос фильмов на сервер
             viewModel.getFilms()
-            //Убираем крутящиеся колечко
             binding.pullToRefresh.isRefreshing = false
         }
     }

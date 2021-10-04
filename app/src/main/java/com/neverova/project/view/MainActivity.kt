@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.neverova.project.*
 import com.neverova.project.databinding.ActivityMainBinding
-import com.neverova.project.domain.Film
+import com.neverova.project.data.entity.Film
 import com.neverova.project.view.fragments.*
 
 class MainActivity : AppCompatActivity() {

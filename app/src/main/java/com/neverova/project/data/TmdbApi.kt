@@ -1,6 +1,6 @@
 package com.neverova.project.data
 
-import com.neverova.project.data.Entity.TmdbResults
+import com.neverova.project.data.entity.TmdbResults
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.neverova.project.data.Entity
+package com.neverova.project.data.entity
 
 import com.google.gson.annotations.SerializedName
 

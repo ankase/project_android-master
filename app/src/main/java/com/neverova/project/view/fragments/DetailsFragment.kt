@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.neverova.project.R
 import com.neverova.project.data.ApiConstants
 import com.neverova.project.databinding.FragmentDetailsBinding
-import com.neverova.project.domain.Film
+import com.neverova.project.data.entity.Film
 import kotlinx.android.synthetic.main.fragment_details.*
 
 class DetailsFragment : Fragment() {

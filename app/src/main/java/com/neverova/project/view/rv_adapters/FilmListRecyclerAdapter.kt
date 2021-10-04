@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.neverova.project.view.rv_viewholders.FilmViewHolder
 import com.neverova.project.R
-import com.neverova.project.domain.Film
+import com.neverova.project.data.entity.Film
 import kotlinx.android.synthetic.main.film_item.view.*
 
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
