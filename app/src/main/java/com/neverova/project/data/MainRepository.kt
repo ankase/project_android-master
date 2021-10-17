@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.neverova.project.data.dao.FilmDao
 import com.neverova.project.data.entity.Film
 import java.util.concurrent.Executors
+import kotlinx.coroutines.flow.Flow
 
 class MainRepository(private val filmDao: FilmDao) {
 
@@ -13,6 +14,6 @@ class MainRepository(private val filmDao: FilmDao) {
         }
     }
 
-    fun getAllFromDB(): LiveData<List<Film>> = filmDao.getCachedFilms()
+    fun getAllFromDB(): Flow<List<Film>> = filmDao.getCachedFilms()
 
 }

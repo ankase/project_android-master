@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/fragment_placeholder"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/layout_height"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/background_main"/>

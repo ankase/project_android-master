@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="@dimen/film_height">
 
     <com.neverova.project.view.customviews.RatingDonutView
         android:id="@+id/rating_donut"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:translationZ="11dp"
+        android:layout_width="@dimen/film_item_width"
+        android:layout_height="@dimen/film_item_height"
+        android:translationZ="@dimen/translationZ"
         app:stroke="10"
         app:progress="77"
         android:layout_gravity="bottom|left"
@@ -21,9 +21,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:elevation="1dp"
-        app:cardCornerRadius="10dp">
+        android:layout_margin="@dimen/cardview_margin"
+        android:elevation="@dimen/cardview_elevation"
+        app:cardCornerRadius="@dimen/corner_radius">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/item_container"
@@ -32,7 +32,7 @@
 
             <ImageView
                 android:id="@+id/poster"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/poster_width"
                 android:scaleType="centerCrop"
                 android:layout_height="match_parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -41,10 +41,10 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/layout_width"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:padding="8dp"
+                android:padding="@dimen/padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintLeft_toRightOf="@+id/poster"
                 app:layout_constraintRight_toRightOf="parent"
@@ -53,9 +53,9 @@
 
             <TextView
                 android:id="@+id/description"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:padding="8dp"
+                android:layout_width="@dimen/layout_width"
+                android:layout_height="@dimen/layout_height"
+                android:padding="@dimen/padding"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/poster"
                 app:layout_constraintRight_toRightOf="parent"
