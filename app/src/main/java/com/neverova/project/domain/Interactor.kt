@@ -7,37 +7,39 @@ import com.neverova.project.data.entity.Film
 import com.neverova.project.data.entity.TmdbResults
 import com.neverova.project.data.preferences.PreferenceProvider
 import com.neverova.project.utils.Converter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi, private val preferences: PreferenceProvider) {
-    val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-    var progressBarState = Channel<Boolean>(Channel.CONFLATED)
+    var progressBarState: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     fun getFilmsFromApi(page: Int) {
-        scope.launch {
-            progressBarState.send(true)
-        }
-
+        progressBarState.onNext(true)
         retrofitService.getFilms(getDefaultCategoryFromPreferences(), API.KEY, "ru-RU", page).enqueue(object : Callback<TmdbResults> {
             override fun onResponse(call: Call<TmdbResults>, response: Response<TmdbResults>) {
                 val list = Converter.convertApiListToDTOList(response.body()?.tmdbFilms)
-                scope.launch {
+                Completable.fromSingle<List<Film>> {
                     repo.putToDb(list)
-                    progressBarState.send(false)
                 }
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
+                progressBarState.onNext(false)
             }
 
+
             override fun onFailure(call: Call<TmdbResults>, t: Throwable) {
-                scope.launch {
-                    progressBarState.send(false)
-                }
+                progressBarState.onNext(false)
             }
         })
     }
@@ -48,5 +50,5 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
 
     fun getDefaultCategoryFromPreferences() = preferences.getDefaultCategory()
 
-    fun getFilmsFromDB(): Flow<List<Film>> = repo.getAllFromDB()
+    fun getFilmsFromDB(): Observable<List<Film>> = repo.getAllFromDB()
 }

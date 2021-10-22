@@ -6,15 +6,15 @@ import com.bumptech.glide.Glide
 import com.neverova.project.data.ApiConstants
 import com.neverova.project.data.entity.Film
 import kotlinx.android.synthetic.main.film_item.view.*
-
+import com.neverova.project.databinding.FilmItemBinding
 
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private val filmItemBinding = FilmItemBinding.bind(itemView)
+    private val title = filmItemBinding.title
+    private val poster = filmItemBinding.poster
+    private val description = filmItemBinding.description
 
-    private val title = itemView.title
-    private val poster = itemView.poster
-    private val description = itemView.description
-
-    private val ratingDonut = itemView.rating_donut
+    private val ratingDonut = filmItemBinding.ratingDonut
 
 
     fun bind(film: Film) {

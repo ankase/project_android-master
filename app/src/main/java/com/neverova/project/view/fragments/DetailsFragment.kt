@@ -23,7 +23,6 @@ import com.neverova.project.data.ApiConstants
 import com.neverova.project.databinding.FragmentDetailsBinding
 import com.neverova.project.viewmodel.DetailsFragmentViewModel
 import com.neverova.project.data.entity.Film
-import kotlinx.android.synthetic.main.fragment_details.*
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 
@@ -46,17 +45,17 @@ class DetailsFragment : Fragment() {
 
         setFilmsDetails()
 
-        details_fab_favorites.setOnClickListener {
+        binding.detailsFabFavorites.setOnClickListener {
             if (!film.isInFavorites) {
-                details_fab_favorites.setImageResource(R.drawable.ic_baseline_favorite_24)
+                binding.detailsFabFavorites.setImageResource(R.drawable.ic_baseline_favorite_24)
                 film.isInFavorites = true
             } else {
-                details_fab_favorites.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                binding.detailsFabFavorites.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 film.isInFavorites = false
             }
         }
 
-        details_fab_share.setOnClickListener {
+        binding.detailsFabFavorites.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
             intent.putExtra(
