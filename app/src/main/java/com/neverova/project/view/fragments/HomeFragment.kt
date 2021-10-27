@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,9 +20,13 @@ import com.neverova.project.utils.addTo
 import com.neverova.project.view.MainActivity
 import com.neverova.project.viewmodel.HomeFragmentViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class HomeFragment : Fragment() {
@@ -92,27 +97,44 @@ class HomeFragment : Fragment() {
             binding.searchView.isIconified = false
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isEmpty()) {
-                    filmsAdapter.addItems(filmsDataBase)
-                    return true
+        Observable.create(ObservableOnSubscribe<String> { subscriber ->
+            binding.searchView.setOnQueryTextListener(object :
+                SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String): Boolean {
+                    filmsAdapter.items.clear()
+                    subscriber.onNext(newText)
+                    return false
                 }
 
-                val result = filmsDataBase.filter {
-                    it.title.toLowerCase(Locale.getDefault())
-                        .contains(newText.toLowerCase(Locale.getDefault()))
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    subscriber.onNext(query)
+                    return false
                 }
-
-                filmsAdapter.addItems(result)
-                return true
-            }
+            })
         })
+            .subscribeOn(Schedulers.io())
+            .map {
+                it.toLowerCase(Locale.getDefault()).trim()
+            }
+            .debounce(800, TimeUnit.MILLISECONDS)
+            .filter {
+                viewModel.getFilms()
+                it.isNotBlank()
+            }
+            .flatMap {
+                viewModel.getSearchResult(it)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onError = {
+                    Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show()
+                },
+                onNext = {
+                    filmsAdapter.addItems(it)
+                }
+            )
+            .addTo(autoDisposable)
     }
 
     private fun initRecyckler() {

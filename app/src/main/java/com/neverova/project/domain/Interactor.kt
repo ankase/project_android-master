@@ -7,16 +7,10 @@ import com.neverova.project.data.entity.Film
 import com.neverova.project.data.entity.TmdbResults
 import com.neverova.project.data.preferences.PreferenceProvider
 import com.neverova.project.utils.Converter
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,6 +37,11 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             }
         })
     }
+
+    fun getSearchResultFromApi(search: String): Observable<List<Film>> = retrofitService.getFilmFromSearch(API.KEY, "ru-RU", search, 1)
+        .map {
+            Converter.convertApiListToDTOList(it.tmdbFilms)
+        }
 
     fun saveDefaultCategoryToPreferences(category: String) {
         preferences.saveDefaultCategory(category)
