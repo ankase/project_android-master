@@ -7,12 +7,13 @@ import com.neverova.project.viewmodel.HomeFragmentViewModel
 import dagger.Component
 import javax.inject.Singleton
 import com.neverova.project.viewmodel.SettingsFragmentViewModel
+import com.example.remote_module.RemoteProvider
 
 @Singleton
 @Component(
-
+    //Внедряем все модули, нужные для этого компонента
+    dependencies = [RemoteProvider::class],
     modules = [
-        RemoteModule::class,
         DatabaseModule::class,
         DomainModule::class
     ]
