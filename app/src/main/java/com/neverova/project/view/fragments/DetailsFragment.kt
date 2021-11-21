@@ -18,12 +18,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.neverova.project.R
-import com.neverova.project.data.ApiConstants
 import com.neverova.project.databinding.FragmentDetailsBinding
 import com.neverova.project.viewmodel.DetailsFragmentViewModel
+import com.neverova.project.view.notifications.NotificationHelper
 import com.neverova.project.data.entity.Film
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
+import com.example.remote_module.entity.ApiConstants
 
 class DetailsFragment : Fragment() {
     private lateinit var film: Film
@@ -54,7 +55,7 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        binding.detailsFabFavorites.setOnClickListener {
+        binding.detailsFabShare.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_SEND
             intent.putExtra(
@@ -67,6 +68,10 @@ class DetailsFragment : Fragment() {
 
         binding.detailsFabDownloadWp.setOnClickListener {
             performAsyncLoadOfPoster()
+        }
+
+        binding.detailsFabWatchLater.setOnClickListener {
+            NotificationHelper.createNotification(requireContext(), film)
         }
     }
 
