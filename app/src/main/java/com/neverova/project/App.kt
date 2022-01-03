@@ -12,6 +12,7 @@ import com.neverova.project.di.modules.RemoteModule
 
 class App : Application() {
     lateinit var dagger: AppComponent
+    var isPromoShown = false
 
     override fun onCreate() {
         super.onCreate()
