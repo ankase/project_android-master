@@ -9,6 +9,7 @@ import com.neverova.project.di.DaggerAppComponent
 import com.neverova.project.di.modules.DatabaseModule
 import com.neverova.project.di.modules.DomainModule
 import com.neverova.project.di.modules.RemoteModule
+import com.example.remote_module.DaggerRemoteComponent
 
 class App : Application() {
     lateinit var dagger: AppComponent
